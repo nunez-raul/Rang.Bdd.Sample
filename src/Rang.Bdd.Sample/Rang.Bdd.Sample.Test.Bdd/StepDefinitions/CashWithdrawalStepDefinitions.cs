@@ -39,7 +39,6 @@ namespace Rang.Bdd.Sample.Test.Bdd.StepDefinitions
         public void WhenTheUserRequestCash(decimal amountToWithdraw)
         {
             _atmOperationResult = _atm.WithdrawCash(amountToWithdraw);
-            _atm.EjectCard();
         }
 
         [Then(@"ensure the account is debited (.*)")]
@@ -54,10 +53,17 @@ namespace Rang.Bdd.Sample.Test.Bdd.StepDefinitions
             Assert.Equal(remainingCash, _atm.GetCurrentCashAmount());
         }
 
-        [Then(@"ensure the card is returned")]
-        public void ThenEnsureTheCardIsReturned()
+        [Then(@"ensure the card is not returned yet")]
+        public void ThenEnsureTheCardIsNotReturnedYet()
         {
-            Assert.False(_atm.HasCardInSlot());
+            Assert.True(_atm.HasCardInSlot());
         }
+
+        [Then(@"ensure the message ""([^""]*)"" is displayed")]
+        public void ThenEnsureTheMessageIsDisplayed(string p0)
+        {
+            Assert.Equal(p0, _atm.GetDisplayedMessage());
+        }
+
     }
 }

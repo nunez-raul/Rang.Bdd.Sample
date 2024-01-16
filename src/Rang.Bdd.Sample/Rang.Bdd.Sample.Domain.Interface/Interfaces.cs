@@ -36,6 +36,7 @@ public interface IAtm
     public void InsertCard(IAtmCard atmCard);
     public void EjectCard();
     public IAtmOperationResult WithdrawCash(decimal amountToWithdraw);
+    public string GetDisplayedMessage();
 }
 
 public interface IAtmOperationResult

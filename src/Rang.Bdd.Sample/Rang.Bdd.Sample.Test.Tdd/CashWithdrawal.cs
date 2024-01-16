@@ -215,5 +215,26 @@ public class CashWithdrawal
         Assert.Equal(8000, atm.GetCurrentCashAmount());
     }
 
-    
+    [Fact]
+    public void Atm_GetDisplayedMessage_Success()
+    {
+        // arrange
+        decimal initialAccountAmount = 1000;
+        var account = Bank.CreateAccount(initialAccountAmount);
+        var validExpirationDateForAtmCard = Bank.GetValidExpirationDateTimeForAtmCard();
+        var atmCard = Bank.CreateAtmCard(account, validExpirationDateForAtmCard);
+        decimal initialAtmAmount = 8500;
+        var atm = Bank.CreateAtm(initialAtmAmount);
+        atm.InsertCard(atmCard);
+        decimal amountToWithdraw = 500;
+        var withdrawResult = atm.WithdrawCash(amountToWithdraw);
+
+        // act 
+        var message = atm.GetDisplayedMessage();
+
+        // assert
+        //  atm state:
+        Assert.True(atm.HasCardInSlot());
+        Assert.Equal("another transaction?", message);
+    }
 }

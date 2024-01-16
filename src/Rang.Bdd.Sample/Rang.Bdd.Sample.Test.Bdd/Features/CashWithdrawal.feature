@@ -23,4 +23,5 @@ Scenario: Account has suficient funds
 	When the user request 500 cash
 	Then ensure the account is debited 500
 	And ensure ATM has 8000 after money is dispensed
-	And ensure the card is returned
+	And ensure the card is not returned yet
+	And ensure the message "another transaction?" is displayed

@@ -135,6 +135,11 @@ public class Atm : IAtm
         _atmCard= null;
     }
 
+    public string GetDisplayedMessage()
+    {
+        return "another transaction?";
+    }
+
     public IAtmOperationResult WithdrawCash(decimal amountToWithdraw)
     {
         if(! HasCardInSlot())
@@ -148,7 +153,7 @@ public class Atm : IAtm
 
         DispenseCash(amountToWithdraw);
         _atmCard.GetAccount().AddDebitTransaction(amountToWithdraw);
-        
+
         return new AtmWithdrawalResult(AtmOperationResultStatus.WithdrawalSuccessful);
     }
 
@@ -170,5 +175,15 @@ public readonly record struct AtmWithdrawalResult : IAtmOperationResult
     public AtmOperationResultStatus GetStatus()
     {
         return _status;
+    }
+}
+
+public readonly record struct AtmMessage
+{
+    public readonly string Value { get; init; }
+
+    public AtmMessage(string value)
+    {
+        Value = value;
     }
 }
